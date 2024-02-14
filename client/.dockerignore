@@ -4,4 +4,5 @@ Dockerfile
 .env
 .dockerignore
 README.md
+*.test.jsx
 *.test.js
