@@ -26,7 +26,8 @@ jobs:
         working-directory: ./server
         run: | 
           npm install
-          export 
+          export DB_URL=$DB_URL
+          export DB_TEST_URL=$DB_TEST_URL
           npm run test
 
       - name: Build Client Docker Image
