@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  nginx:
+    image: ritwikkapoor/mern-anon-notes:nginx-latest
+    restart: always
+    depends_on:
+      - client
+      - server
+    ports:
+      - "80:80"
+
+  client:
+    image: ritwikkapoor/mern-anon-notes:client-latest
+    environment:
+      - VITE_APP_BASE_URL=${VITE_APP_BASE_URL}
+
+  server:
+    image: ritwikkapoor/mern-anon-notes:server-latest
+    environment:
+      - DB_URL=${DB_URL}

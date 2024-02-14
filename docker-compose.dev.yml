@@ -1,0 +1,56 @@
+version: "3.7"
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: servernotes
+    container_name: servernotes_c
+    volumes:
+      - ./server/:/myapp/server
+      - servernotes-modules:/myapp/server/node_modules
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo-notes
+    env_file: ./server/.env
+    networks:
+      - notes-network
+  mongo-notes:
+    container_name: mongosnotes
+    image: mongo:latest
+    ports:
+      - "27019:27017"
+    volumes:
+      - mongo-notes-data:/data/db
+    networks:
+      - notes-network
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: clientnotes
+    container_name: clientnotes_c
+    volumes:
+      - ./client/:/myapp/client
+      - clientnotes-modules:/myapp/client/node_modules
+    depends_on:
+      - server
+    env_file: ./client/.env.local
+    ports:
+      - "5175:5173"
+    networks:
+      - notes-network
+
+networks:
+  notes-network:
+    driver: bridge
+
+volumes:
+  mongo-notes-data:
+    driver: local
+  servernotes-modules:
+    driver: local
+  clientnotes-modules:
+    driver: local

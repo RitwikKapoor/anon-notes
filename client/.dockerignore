@@ -1,0 +1,7 @@
+node_modules
+Dockerfile
+.git
+.env
+.dockerignore
+README.md
+*.test.js
