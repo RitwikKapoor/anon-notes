@@ -7,4 +7,5 @@ COPY . .
 FROM gcr.io/distroless/nodejs18-debian12
 COPY --from=builder /myapp/server /myapp/server
 WORKDIR /myapp/server
+EXPOSE 5000
 CMD ["server.js"]
